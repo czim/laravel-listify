@@ -6,7 +6,7 @@
 [![Latest Stable Version](http://img.shields.io/packagist/v/czim/laravel-listify.svg)](https://packagist.org/packages/czim/laravel-listify)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/369fd4d7-b2d1-4438-9e08-e7ad586b81c4/mini.png)](https://insight.sensiolabs.com/projects/369fd4d7-b2d1-4438-9e08-e7ad586b81c4)
 
-This is a rebuild (from scratch) of (Lookitsatravis' Listify)[https://github.com/lookitsatravis/listify] for personal reasons.
+This is a rebuild (from scratch) of [Lookitsatravis' Listify](https://github.com/lookitsatravis/listify) for personal reasons.
 It uses the same interface as Listify, so switching from that to this package should not break anything.
 
 
@@ -30,6 +30,7 @@ $ composer require czim/laravel-listify
 
 ## Usage 
 
+Although it is not required, you may make models that use the trait implement the `ListifyInterface` for your own purposes. 
 
 
 ## Contributing
