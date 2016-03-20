@@ -17,7 +17,7 @@ trait Listify
 {
 
     /**
-     * Listify configuration
+     * Listify configuration.
      *
      * @var mixed[]
      */
@@ -34,28 +34,28 @@ trait Listify
     protected $defaultScope = '1 = 1';
 
     /**
-     * The current raw scope string
+     * The current raw scope string.
      *
      * @var null|string
      */
     protected $stringScopeValue;
 
     /**
-     * Whether the raw scope, if null, was explicitly set due to an active null-scope
+     * Whether the raw scope, if null, was explicitly set due to an active null-scope.
      *
      * @var boolean
      */
     protected $stringScopeNullExplicitlySet = false;
 
     /**
-     * Whether the original attributes are currently loaded (swapped state)
+     * Whether the original attributes are currently loaded (swapped state).
      *
      * @var bool
      */
     protected $originalAttributesLoaded = false;
 
     /**
-     * Container for temporarily swapped attributes
+     * Container for temporarily swapped attributes.
      *
      * @var mixed[]
      */
@@ -176,7 +176,7 @@ trait Listify
     }
 
     /**
-     * Returns a config value by key, or null if it does not exist
+     * Returns a config value by key, or null if it does not exist.
      *
      * @param string $key
      * @return null|mixed
@@ -245,6 +245,9 @@ trait Listify
     }
 
     /**
+     * Adds the record to a list in the configured standard approach,
+     * unless it should be (kept) excluded from any list.
+     *
      * @param Model|Listify $model
      */
     protected function performConfiguredAddMethod($model)
@@ -549,7 +552,7 @@ trait Listify
 
 
     /**
-     * Returns whether the record is in a list
+     * Returns whether the record is in a list.
      *
      * @return boolean
      */
@@ -559,7 +562,7 @@ trait Listify
     }
 
     /**
-     * Returns whether the record is not in a list
+     * Returns whether the record is not in a list.
      *
      * @return boolean
      */
@@ -569,7 +572,7 @@ trait Listify
     }
 
     /**
-     * Returns the default position to set for new records
+     * Returns the default position to set for new records.
      *
      * @return null|integer
      */
@@ -579,7 +582,7 @@ trait Listify
     }
 
     /**
-     * Returns whether the records position is equal to the default
+     * Returns whether the records position is equal to the default.
      *
      * @return boolean
      */
@@ -589,7 +592,7 @@ trait Listify
     }
 
     /**
-     * Sets a new position for the record and saves it
+     * Sets a new position for the record and saves it.
      *
      * @param integer|null $position        null removes the item from the list
      * @return bool
@@ -607,7 +610,7 @@ trait Listify
     // ------------------------------------------------------------------------------
 
     /**
-     * Remembers what normalized string scope is now active
+     * Remembers what normalized string scope is now active.
      */
     protected function rememberCurrentlyUsedScope()
     {
@@ -615,7 +618,7 @@ trait Listify
     }
 
     /**
-     * Returns whether the scope has changed since it was last applied
+     * Returns whether the scope has changed since it was last applied.
      * Note that this also updates the last known scope, resetting the changed state back to false
      *
      * @return boolean
@@ -628,10 +631,6 @@ trait Listify
             // for BelongsTo scopes, use a cleaner way to check for differences
             return ($this->getOriginal()[ $scope->getForeignKey() ] != $this->getAttribute( $scope->getForeignKey()));
         }
-
-        
-        //var_dump($scope);
-        //var_dump($this->getOriginal());
 
         if (null === $this->stringScopeValue && ! $this->stringScopeNullExplicitlySet) {
 
@@ -680,7 +679,8 @@ trait Listify
     }
 
     /**
-     * Normalizes the currently applicable list scope to a string or BelongsTo relation instance
+     * Normalizes the currently applicable list scope to a string
+     * or BelongsTo relation instance.
      *
      * @param mixed   $scope
      * @param boolean $doNotResolveBelongsTo        if true, does not stringify a BelongsTo instance
@@ -722,7 +722,7 @@ trait Listify
 
 
     /**
-     * Returns a fresh query builder after re-applying the listify scope condition
+     * Returns a fresh query builder after re-applying the listify scope condition.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -790,7 +790,7 @@ trait Listify
     }
 
     /**
-     * Reorders the positions of all items between two affected positions
+     * Reorders the positions of all items between two affected positions.
      *
      * @param integer      $positionBefore
      * @param integer      $positionAfter
@@ -827,7 +827,7 @@ trait Listify
     }
 
     /**
-     * Increments the position values of records with a higher position value than the given
+     * Increments the position values of records with a higher position value than the given.
      * Note that 'below' means a higher position value.
      *
      * @param null|integer $position    if null, uses this record's current position
@@ -846,7 +846,7 @@ trait Listify
     }
 
     /**
-     * Increments the position values of records with a lower position value than the given
+     * Increments the position values of records with a lower position value than the given.
      * Note that 'above' means a lower position value.
      *
      * @param null|integer $position    if null, uses this record's current position
@@ -865,7 +865,7 @@ trait Listify
     }
 
     /**
-     * Increments the position values of records with a lower position value than the given
+     * Increments the position values of records with a lower position value than the given.
      * Note that 'below' means a smaller position value.
      *
      * @param integer $position    if null, uses this record's current position
@@ -878,7 +878,7 @@ trait Listify
     }
 
     /**
-     * Increments the position values of all records in the current list scope
+     * Increments the position values of all records in the current list scope.
      */
     protected function incrementPositionsOfAllItems()
     {
@@ -886,7 +886,7 @@ trait Listify
     }
 
     /**
-     * Updates all record positions based on changed position of the record in the current list
+     * Updates all record positions based on changed position of the record in the current list.
      */
     protected function updateListifyPositions()
     {
@@ -911,7 +911,7 @@ trait Listify
 
 
     /**
-     * Returns the value of the bottom position
+     * Returns the value of the bottom position.
      *
      * @param null|Model|ListifyInterface $exclude   a model whose value to exclude in determining the position
      * @return integer|null
@@ -926,7 +926,7 @@ trait Listify
     }
 
     /**
-     * Returns the bottom item
+     * Returns the bottom item.
      *
      * @param null|Model|ListifyInterface $exclude  a model to exclude as a match
      * @return null|Model|ListifyInterface
@@ -952,9 +952,8 @@ trait Listify
     // ------------------------------------------------------------------------------
 
     /**
-     * Extracts a raw WHERE clause string from a QueryBuilder instance
-     *
-     * @todo make this more reliable, less clunky
+     * Extracts a raw WHERE clause string from a QueryBuilder instance.
+     * Note that this is practically identical to the original Listify.
      *
      * @param QueryBuilder $query A Query Builder instance
      * @return string
@@ -975,16 +974,6 @@ trait Listify
 
         for ($i = 0; $i < count($queryChunks); $i++) {
 
-            // "boolean"
-            // "integer"
-            // "double" (for historical reasons "double" is returned in case of a float, and not simply "float")
-            // "string"
-            // "array"
-            // "object"
-            // "resource"
-            // "NULL"
-            // "unknown type"
-
             $whereString .= $queryChunks[ $i ];
 
             if (isset($bindings[ $i ])) {
@@ -999,7 +988,7 @@ trait Listify
     }
 
     /**
-     * Makes a raw where condition string from a BelongsTo relation instance
+     * Makes a raw where condition string from a BelongsTo relation instance.
      *
      * @param BelongsTo $relation
      * @return string
@@ -1015,7 +1004,7 @@ trait Listify
     }
 
     /**
-     * Returns the fully qualified primary key column for the model
+     * Returns the fully qualified primary key column for the model.
      *
      * @return string
      */
@@ -1025,7 +1014,7 @@ trait Listify
     }
 
     /**
-     * Swaps changed (original) attributes with current attributes
+     * Swaps changed (original) attributes with current attributes.
      *
      * @return $this
      */
