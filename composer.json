@@ -1,0 +1,43 @@
+{
+    "name": "czim/laravel-listify",
+    "description": "Turns any model into a list. Rebuild of the popular Lookitsatravis Listify package.",
+    "keywords": [
+        "eloquent",
+        "model",
+        "list",
+        "position"
+    ],
+    "homepage": "https://github.com/czim/laravel-listify",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Coen Zimmerman",
+            "email": "coen@pixelindustries.com",
+            "homepage": "http://www.pixelindustries.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.*",
+        "scrutinizer/ocular": "~1.1",
+        "orchestra/testbench": "~3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Czim\\Listify\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Czim\\Listify\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
