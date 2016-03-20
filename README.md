@@ -2,8 +2,8 @@
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
-[![Build Status](https://travis-ci.org/czim/laravel-dataobject.svg?branch=master)](https://travis-ci.org/czim/laravel-dataobject)
-[![Latest Stable Version](http://img.shields.io/packagist/v/czim/laravel-dataobject.svg)](https://packagist.org/packages/czim/laravel-dataobject)
+[![Build Status](https://travis-ci.org/czim/laravel-listify.svg?branch=master)](https://travis-ci.org/czim/laravel-listify)
+[![Latest Stable Version](http://img.shields.io/packagist/v/czim/laravel-listify.svg)](https://packagist.org/packages/czim/laravel-listify)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/369fd4d7-b2d1-4438-9e08-e7ad586b81c4/mini.png)](https://insight.sensiolabs.com/projects/369fd4d7-b2d1-4438-9e08-e7ad586b81c4)
 
 This is a rebuild (from scratch) of (Lookitsatravis' Listify)[https://github.com/lookitsatravis/listify] for personal reasons.
