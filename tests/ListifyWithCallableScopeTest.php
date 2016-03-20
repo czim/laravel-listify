@@ -6,7 +6,12 @@ use Czim\Listify\Test\Helpers\TestModel;
 class ListifyWithCallableScopeTest extends StandardListifyTest
 {
 
+    protected $regexpForScopedSql = '#^select \* from [\'"]?test_models[\'"]? where'
+                                  . ' `scope` = [\'"]?2[\'"]?$#i';
 
+    protected $regexpForScopedInListSql = '#^select \* from [\'"]?test_models[\'"]? where'
+                                        . ' `scope` = [\'"]?2[\'"]?'
+                                        . ' and [\'"]?test_models[\'"]?.[\'"]?position[\'"]? is not null$#i';
 
     /**
      * @test
