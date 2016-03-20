@@ -4,7 +4,7 @@
 [![Software License][ico-license]](LICENSE.md)
 [![Build Status](https://travis-ci.org/czim/laravel-listify.svg?branch=master)](https://travis-ci.org/czim/laravel-listify)
 [![Latest Stable Version](http://img.shields.io/packagist/v/czim/laravel-listify.svg)](https://packagist.org/packages/czim/laravel-listify)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/369fd4d7-b2d1-4438-9e08-e7ad586b81c4/mini.png)](https://insight.sensiolabs.com/projects/369fd4d7-b2d1-4438-9e08-e7ad586b81c4)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/7d80b8fa-5647-40c6-b5bb-d9583398d128/mini.png)](https://insight.sensiolabs.com/projects/7d80b8fa-5647-40c6-b5bb-d9583398d128)
 
 This is a rebuild (from scratch) of [Lookitsatravis' Listify](https://github.com/lookitsatravis/listify) for personal reasons.
 It uses the same interface as Listify, so switching from that to this package should not break anything.
