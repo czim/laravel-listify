@@ -36,9 +36,16 @@ trait Listify
     /**
      * The current raw scope string
      *
-     * @var string
+     * @var null|string
      */
     protected $stringScopeValue;
+
+    /**
+     * Whether the raw scope, if null, was explicitly set due to an active null-scope
+     *
+     * @var boolean
+     */
+    protected $stringScopeNullExplicitlySet = false;
 
     /**
      * Whether the original attributes are currently loaded (swapped state)
@@ -242,7 +249,7 @@ trait Listify
      */
     protected function performConfiguredAddMethod($model)
     {
-        if ( ! $model->addNewAt()) return;
+        if ( ! $model->addNewAt() || $this->excludeFromList()) return;
 
         $addMethod = 'addToList' . $model->addNewAt();
 
@@ -622,13 +629,54 @@ trait Listify
             return ($this->getOriginal()[ $scope->getForeignKey() ] != $this->getAttribute( $scope->getForeignKey()));
         }
 
-        if (null === $this->stringScopeValue) {
+        
+        //var_dump($scope);
+        //var_dump($this->getOriginal());
+
+        if (null === $this->stringScopeValue && ! $this->stringScopeNullExplicitlySet) {
+
+            // if the known previous scope is null, make sure this isn't the result of a
+            // variable scope that returned null - if that is the case, the scope has changed
+            if (null !== $scope && $this->hasVariableListifyScope()) {
+                
+                $this->swapChangedAttributes();
+                $previousScope = $this->normalizeListifyScope($this->scopeName());
+                $this->swapChangedAttributes();
+                
+                if (null === $previousScope) return true;
+            }
 
             $this->stringScopeValue = $scope;
+            $this->stringScopeNullExplicitlySet = (null === $scope);
             return false;
         }
 
         return ($scope != $this->stringScopeValue);
+    }
+
+    /**
+     * Returns whether the record should be kept out of any lists.
+     * This allows null-scope items to be handled when they occur.
+     *
+     * @return boolean
+     */
+    protected function excludeFromList()
+    {
+        $scope = $this->normalizeListifyScope($this->scopeName());
+
+        return (null === $scope);
+    }
+
+    /**
+     * Returns whether the configured list scope is variable.
+     * 
+     * @return bool
+     */
+    protected function hasVariableListifyScope()
+    {
+        $scope = $this->scopeName();
+        
+        return ($scope instanceof BelongsTo || is_callable($scope));
     }
 
     /**
@@ -667,6 +715,8 @@ trait Listify
     {
         $this->stringScopeValue = $this->normalizeListifyScope($this->scopeName());
 
+        $this->stringScopeNullExplicitlySet = (null === $this->stringScopeValue);
+
         return $this->stringScopeValue;
     }
 
@@ -699,7 +749,7 @@ trait Listify
         // swap the attributes so the record is scoped in its old scope
         $this->swapChangedAttributes();
 
-        if ($this->lowerItem()) {
+        if ( ! $this->excludeFromList() && $this->lowerItem()) {
             $this->decrementPositionsOfItemsBelow();
         }
 
@@ -840,11 +890,9 @@ trait Listify
      */
     protected function updateListifyPositions()
     {
-        $oldPosition = $this->getOriginal()[ $this->positionColumn() ];
         $newPosition = $this->getListifyPosition();
 
         // check for duplicate positions and resolve them if required
-
         if (null === $newPosition) return;
 
         $count = $this->listifyScopedQuery()
@@ -852,6 +900,10 @@ trait Listify
             ->count();
 
         if ($count < 2) return;
+
+        $oldPosition = array_get($this->getOriginal(), $this->positionColumn(), false);
+
+        if (false == $oldPosition) return;
 
         // reorder positions while excluding the current model
         $this->reorderPositionsOnItemsBetween($oldPosition, $newPosition, $this->id);
@@ -956,11 +1008,8 @@ trait Listify
     {
         $id = $this->getAttribute( $relation->getForeignKey() );
 
-        // todo: this should be allowed, and revert to being interpreted as an 'unlisted' item
-        if (null === $id) {
-            return null;
-            throw new \InvalidArgumentException("BelongsTo Foreign key value is null");
-        }
+        // an empty foreign key will, as a null-scope, remove the item from any list
+        if (null === $id) return null;
 
         return '`' . $relation->getForeignKey() . '` = ' . (int) $id;
     }
