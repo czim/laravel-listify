@@ -89,6 +89,54 @@ class ListifyWithCallableScopeTest extends StandardListifyTest
     }
 
 
+    /**
+     * @test
+     */
+    function it_leaves_records_with_a_null_scope_out_of_any_list()
+    {
+        // create a record that should be kept out of lists
+        $model = $this->createNewModelWithCallableScope([ 'scope' => 99 ]);
+
+        // add it to a list/scope
+        $model->scope = 2;
+        $model->save();
+        $model = $model->fresh();
+
+        $this->assertEquals(2, $model->scope, "New Model should be at position 6 in scope 2");
+        $this->assertEquals(6, $model->getListifyPosition(), "New Model should be at position 6 in scope 2");
+
+        $model->delete();
+
+
+        // also check the reverse: a model with a normal scope first
+        $model = $this->createNewModelWithCallableScope([ 'scope' => 2 ]);
+
+        // that is then updated with a null-scope
+        $model->scope = 99;
+        $model->save();
+        $model = $model->fresh();
+
+        $this->assertEquals(99, $model->scope, "New Model should not be in a list in scope 99");
+        $this->assertFalse($model->isInList(), "New Model should not be in a list in scope 99");
+
+        $model->delete();
+
+
+        // it should also handle list removal by null-scope assignment correctly
+        $model = $this->findStandardModel(3);
+
+        $model->scope = 99;
+        $model->save();
+        $model = $model->fresh();
+        
+        $this->assertNull($model->getListifyPosition(), "New Model should have null position in scope 99");
+        $this->assertEquals(1, TestModel::find(1)->getListifyPosition(), "Other record position incorrect (2)");
+        $this->assertEquals(2, TestModel::find(2)->getListifyPosition(), "Other record position incorrect (2)");
+        $this->assertEquals(3, TestModel::find(4)->getListifyPosition(), "Other record position incorrect (2)");
+        $this->assertEquals(4, TestModel::find(5)->getListifyPosition(), "Other record position incorrect (2)");
+    }
+
+
 
     /**
      * Prepares a new model set up to use a callable scope, but does not save it
@@ -138,9 +186,10 @@ class ListifyWithCallableScopeTest extends StandardListifyTest
      */
     protected function scopeMethod(TestModel $model)
     {
-        if ( ! $model->scope) {
-            return '`scope` is null';
-        }
+        // null-scope under very specific conditions
+        if ($model->scope == 99) return null;
+
+        if ( ! $model->scope) return '`scope` is null';
 
         return '`scope` = ' . (int) $model->scope;
     }
