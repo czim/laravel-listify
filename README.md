@@ -43,6 +43,11 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 - [Coen Zimmerman][link-author]
 - [All Contributors][link-contributors]
 
+Obviously, the main credits for anything to do with Listify go to:
+
+- [Travis Vignon](https://github.com/lookitsatravis)
+
+
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
