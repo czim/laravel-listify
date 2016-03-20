@@ -7,17 +7,8 @@ class StandardListifyTest extends TestCase
 {
 
     /**
-     * @before
      */
-    protected function seedDatabase()
-    {
-        for ($x = 0; $x < 5; $x++) {
 
-            $this->createNewStandardModel([
-                'name' => 'model ' . ($x + 1),
-            ]);
-        }
-    }
 
     /**
      * @test
@@ -365,6 +356,20 @@ class StandardListifyTest extends TestCase
         $this->assertEquals(4, $lower->id);
     }
 
+    // ------------------------------------------------------------------------------
+    //      Setup and Helper methods
+    // ------------------------------------------------------------------------------
+
+    /**
+     * @before
+     */
+    protected function seedDatabase()
+    {
+        for ($x = 0; $x < 5; $x++) {
+
+            $this->createNewStandardModel([ 'name' => 'model ' . ($x + 1) ]);
+        }
+    }
 
     /**
      * Prepares a new listified model set up for standard tests

@@ -7,6 +7,11 @@ use Czim\Listify\Test\Helpers\TestRelatedModel;
 class ListifyWithBelongsToScopeTest extends StandardListifyTest
 {
 
+
+    // ------------------------------------------------------------------------------
+    //      Setup and Helper methods
+    // ------------------------------------------------------------------------------
+
     /**
      * @before
      */

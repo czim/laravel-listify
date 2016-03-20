@@ -6,33 +6,8 @@ use Czim\Listify\Test\Helpers\TestModel;
 class ListifyWithCallableScopeTest extends StandardListifyTest
 {
 
-    /**
-     * @before
-     */
-    protected function seedDatabase()
-    {
-        parent::seedDatabase();
 
-        // 1 model outside of the applicable scopes
-        for ($x = 0; $x < 1; $x++) {
 
-            $this->createNewModelWithCallableScope([
-                'name'  => 'model (null scope) ' . ($x + 1),
-                'scope' => null,
-            ]);
-        }
-
-        // 2 models outside with scope '1'
-        for ($x = 0; $x < 2; $x++) {
-
-            $this->createNewModelWithCallableScope([
-                'name'  => 'model (scope 1) ' . ($x + 1),
-                'scope' => 1,
-            ]);
-        }
-    }
-    
-    
     /**
      * @test
      */
@@ -53,7 +28,6 @@ class ListifyWithCallableScopeTest extends StandardListifyTest
         $this->assertEquals(6, $model->getListifyPosition(), "2-scoped model should have position 6");
         $model->delete();
     }
-
 
     /**
      * @test
@@ -87,7 +61,6 @@ class ListifyWithCallableScopeTest extends StandardListifyTest
         $this->assertEquals(1, TestModel::find(7)->getListifyPosition(), "Other record position incorrect (2)");
         $this->assertEquals(2, TestModel::find(8)->getListifyPosition(), "Other record position incorrect (2)");
     }
-
 
     /**
      * @test
@@ -128,7 +101,7 @@ class ListifyWithCallableScopeTest extends StandardListifyTest
         $model->scope = 99;
         $model->save();
         $model = $model->fresh();
-        
+
         $this->assertNull($model->getListifyPosition(), "New Model should have null position in scope 99");
         $this->assertEquals(1, TestModel::find(1)->getListifyPosition(), "Other record position incorrect (2)");
         $this->assertEquals(2, TestModel::find(2)->getListifyPosition(), "Other record position incorrect (2)");
@@ -137,6 +110,35 @@ class ListifyWithCallableScopeTest extends StandardListifyTest
     }
 
 
+    // ------------------------------------------------------------------------------
+    //      Setup and Helper methods
+    // ------------------------------------------------------------------------------
+
+    /**
+     * @before
+     */
+    protected function seedDatabase()
+    {
+        parent::seedDatabase();
+
+        // 1 model outside of the applicable scopes
+        for ($x = 0; $x < 1; $x++) {
+
+            $this->createNewModelWithCallableScope([
+                'name'  => 'model (null scope) ' . ($x + 1),
+                'scope' => null,
+            ]);
+        }
+
+        // 2 models outside with scope '1'
+        for ($x = 0; $x < 2; $x++) {
+
+            $this->createNewModelWithCallableScope([
+                'name'  => 'model (scope 1) ' . ($x + 1),
+                'scope' => 1,
+            ]);
+        }
+    }
 
     /**
      * Prepares a new model set up to use a callable scope, but does not save it
