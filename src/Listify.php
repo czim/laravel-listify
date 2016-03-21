@@ -63,27 +63,27 @@ trait Listify
 
     public static function bootListify()
     {
-        static::deleting(function ($model) {
+        static::deleting(function (Model $model) {
             /** @var Listify $model */
             $model->setListifyPosition($model->getOriginal()[ $model->positionColumn() ]);
         });
 
-        static::deleted(function ($model) {
+        static::deleted(function (Model $model) {
             /** @var Listify $model */
             $model->decrementPositionsOfItemsBelow();
         });
 
-        static::updating(function ($model) {
+        static::updating(function (Model $model) {
             /** @var Listify $model */
             $model->handleListifyScopeChange();
         });
 
-        static::updated(function ($model) {
+        static::updated(function (Model $model) {
             /** @var Listify $model */
             $model->updateListifyPositions();
         });
 
-        static::creating(function ($model) {
+        static::creating(function (Model $model) {
             /** @var Listify $model */
             $model->performConfiguredAddMethod($model);
         });
@@ -902,7 +902,7 @@ trait Listify
 
         $oldPosition = array_get($this->getOriginal(), $this->positionColumn(), false);
 
-        if (false == $oldPosition) return;
+        if (false === $oldPosition) return;
 
         // reorder positions while excluding the current model
         $this->reorderPositionsOnItemsBetween($oldPosition, $newPosition, $this->id);
@@ -968,10 +968,11 @@ trait Listify
         }
 
         $queryChunks = explode('?', $initialQueryChunks[1]);
+        $chunkCount  = count($queryChunks);
         $bindings    = $query->getBindings();
         $whereString = '';
 
-        for ($i = 0; $i < count($queryChunks); $i++) {
+        for ($i = 0; $i < $chunkCount; $i++) {
 
             $whereString .= $queryChunks[ $i ];
 
