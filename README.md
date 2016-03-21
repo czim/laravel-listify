@@ -28,9 +28,29 @@ Via Composer
 $ composer require czim/laravel-listify
 ```
 
+
 ## Usage 
 
+For general functionality the original Listify interface is largely the same. For reference, see [the original documentation](https://github.com/lookitsatravis/listify).
+
+Some exceptions apply:
+
+- You may now use a `callable` scope, which may return any string to be used in a (raw) `where` clause. The original limitations to Listify string scopes apply. However, `null` is now an acceptable scope that will keep or remove the record from any list (its `position` will remain `NULL`).   
+- You may now use nullable and null foreign keys for BelongsTo scopes. A record without the relevant foreign key will not be added to a list.
+
 Although it is not required, you may make models that use the trait implement the `ListifyInterface` for your own purposes. 
+
+
+## Differences with the original Listify
+
+There is no `attach` artisan command supplied; you are expected to handle your `position` column migrations yourself.
+
+The exceptions that do get thrown have been simplified. `InvalidArgumentException`, `UnexpectedValueException` and `BadMethodCallException` are thrown instead of custom exceptions.
+Exceptions are no longer thrown for 'null scope' or 'null foreign key', since these are now expected and allowed. Models with an effective 'null scope' will now silently be excluded from lists. 
+  
+Note that this package has been tested with the original listify PHPUnit tests and passes them where behavior has not intentionally changed.
+
+Finally, this trait may be used with inheritance (because its base scope is `protected` rather than `private`). You can make a 'BaseListifyModel' and extend that to avoid code (or setup) duplication. 
 
 
 ## Contributing
