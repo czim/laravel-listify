@@ -53,6 +53,13 @@ Note that this package has been tested with the original listify PHPUnit tests a
 Finally, this trait may be used with inheritance (because its base scope is `protected` rather than `private`). You can make a 'BaseListifyModel' and extend that to avoid code (or setup) duplication. 
 
 
+## To Do
+
+- The way string (and QueryBuilder) scopes work is slightly strange. 
+  Adding new records that fall outside of the scope will be added with a position value.
+  Those records are reported as being in a list, and odd things can happen when manipulating them.
+
+
 ## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
