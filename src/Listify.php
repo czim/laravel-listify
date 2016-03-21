@@ -1,6 +1,7 @@
 <?php
 namespace Czim\Listify;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -194,10 +195,10 @@ trait Listify
      * Applies the listify scope to a query builder instance.
      * Eloquent scope method.
      *
-     * @param \Illuminate\Database\Eloquent\Builder|QueryBuilder $query
-     * @return \Illuminate\Database\Eloquent\Builder|QueryBuilder
+     * @param Builder|QueryBuilder $query
+     * @return Builder|QueryBuilder
      */
-    public function scopeListifyScope($query)
+    public function scopeListifyScope(Builder $query)
     {
         return $query->whereRaw($this->scopeCondition());
     }
@@ -206,10 +207,10 @@ trait Listify
      * Applies conditions to a query in order to retrieve only the records that are in a list.
      * Eloquent scope method.
      *
-     * @param \Illuminate\Database\Eloquent\Builder|QueryBuilder|Listify $query
-     * @return \Illuminate\Database\Eloquent\Builder|QueryBuilder|Listify
+     * @param Builder|QueryBuilder|Listify $query
+     * @return Builder|QueryBuilder|Listify
      */
-    public function scopeInList($query)
+    public function scopeInList(Builder $query)
     {
         return $query->listifyScope()->whereNotNull($this->getTable() . "." . $this->positionColumn());
     }
@@ -249,7 +250,7 @@ trait Listify
      *
      * @param Model|Listify $model
      */
-    protected function performConfiguredAddMethod($model)
+    protected function performConfiguredAddMethod(Model $model)
     {
         if ( ! $model->addNewAt() || $this->excludeFromList()) return;
 
@@ -723,7 +724,7 @@ trait Listify
     /**
      * Returns a fresh query builder after re-applying the listify scope condition.
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return Builder
      */
     protected function listifyScopedQuery()
     {

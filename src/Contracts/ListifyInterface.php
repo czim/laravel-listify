@@ -1,6 +1,8 @@
 <?php
 namespace Czim\Listify\Contracts;
 
+use Illuminate\Database\Eloquent\Builder;
+
 interface ListifyInterface
 {
 
@@ -25,18 +27,18 @@ interface ListifyInterface
     /**
      * Applies the listify scope to a query builder instance.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Builder $query
+     * @return Builder
      */
-    public function scopeListifyScope($query);
+    public function scopeListifyScope(Builder $query);
 
     /**
      * Applies conditions to a query in order to retrieve only the records that are in a list.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Builder $query
+     * @return Builder
      */
-    public function scopeInList($query);
+    public function scopeInList(Builder $query);
 
 
 
