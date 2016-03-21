@@ -1,7 +1,6 @@
 <?php
 namespace Czim\Listify;
 
-use Czim\Listify\Contracts\ListifyInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -913,7 +912,7 @@ trait Listify
     /**
      * Returns the value of the bottom position.
      *
-     * @param null|Model|ListifyInterface $exclude   a model whose value to exclude in determining the position
+     * @param null|Model|Listify $exclude   a model whose value to exclude in determining the position
      * @return integer|null
      */
     protected function getBottomPositionValue($exclude = null)
@@ -928,8 +927,8 @@ trait Listify
     /**
      * Returns the bottom item.
      *
-     * @param null|Model|ListifyInterface $exclude  a model to exclude as a match
-     * @return null|Model|ListifyInterface
+     * @param null|Model|Listify $exclude  a model to exclude as a match
+     * @return null|Model|Listify
      */
     protected function getBottomItem(Model $exclude = null)
     {
