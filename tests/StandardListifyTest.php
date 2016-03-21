@@ -74,16 +74,15 @@ class StandardListifyTest extends TestCase
      */
     function it_correctly_applies_the_default_position_when_adding_a_new_record()
     {
-        $model = $this->createNewStandardModel([ 'name' => 'new bottom' ]);
+        $model = $this->createNewStandardModel([ 'name' => 'new bottom model' ]);
 
         $this->assertEquals(6, $model->getListifyPosition(), "New default bottom position should be 6");
 
         $lowestModelId = $model->id;
 
-        $model = $this->makeNewStandardModel([ 'name' => 'new top' ]);
+        $model = $this->makeNewStandardModel([ 'name' => 'new top model' ]);
         $model->setListifyConfig('add_new_at', 'top');
         $model->save();
-
 
         $this->assertEquals(1, $model->getListifyPosition(), "New default top position should be 1");
         $this->assertEquals(7, $this->findStandardModel($lowestModelId)->getListifyPosition(), "The bottom record should be at position 7");
