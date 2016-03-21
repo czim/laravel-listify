@@ -7,13 +7,9 @@ use Czim\Listify\Test\Helpers\TestRelatedModel;
 class ListifyWithBelongsToScopeTest extends StandardListifyTest
 {
 
-    protected $regexpForScopedSql = '#^select \* from [\'"]?test_models[\'"]? where'
-                                  . ' `test_related_model_id` = [\'"]?3[\'"]?$#i';
+    protected $regexpScopePart = '`test_related_model_id` = [\'"]?3[\'"]?';
 
-    protected $regexpForScopedInListSql = '#^select \* from [\'"]?test_models[\'"]? where'
-                                        . ' `test_related_model_id` = [\'"]?3[\'"]?'
-                                        . ' and [\'"]?test_models[\'"]?.[\'"]?position[\'"]? is not null$#i';
-
+    
     /**
      * @test
      */

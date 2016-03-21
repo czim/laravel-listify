@@ -7,19 +7,12 @@ class StandardListifyTest extends TestCase
 {
 
     /**
-     * Regular expression to check for ListifyScope scope query SQL
+     * Regular expression where content to check for scope query SQL
      *
      * @var string
      */
-    protected $regexpForScopedSql = '#^select \* from [\'"]?test_models[\'"]? where 1 = 1$#i';
+    protected $regexpScopePart = '1 = 1';
 
-    /**
-     * Regular expression to check for inList scope query SQL
-     *
-     * @var string
-     */
-    protected $regexpForScopedInListSql = '#^select \* from [\'"]?test_models[\'"]? where 1 = 1'
-                                        . ' and [\'"]?test_models[\'"]?.[\'"]?position[\'"]? is not null$#i';
 
     /**
      * @test
@@ -27,12 +20,9 @@ class StandardListifyTest extends TestCase
     function it_offers_a_list_query_builder_scope()
     {
         $model = $this->findStandardModel(1);
+        $regex = '#^select \* from [\'"]?test_models[\'"]? where ' . $this->regexpScopePart . '$#i';
 
-        $this->assertRegExp(
-            $this->regexpForScopedSql,
-            $model->listifyScope()->toSql(),
-            "Listify scope does not return correct SQL"
-        );
+        $this->assertRegExp($regex, $model->listifyScope()->toSql(), "Listify scope does not return correct SQL");
     }
 
     /**
@@ -41,12 +31,10 @@ class StandardListifyTest extends TestCase
     function it_offers_a_scope_for_records_in_a_list()
     {
         $model = $this->findStandardModel(1);
+        $regex = '#^select \* from [\'"]?test_models[\'"]? where ' . $this->regexpScopePart
+               . ' and [\'"]?test_models[\'"]?.[\'"]?position[\'"]? is not null$#i';
 
-        $this->assertRegExp(
-            $this->regexpForScopedInListSql,
-            $model->inList()->toSql(),
-            "In list scope does not return correct SQL"
-        );
+        $this->assertRegExp($regex, $model->inList()->toSql(), "In list scope does not return correct SQL");
     }
 
     /**
