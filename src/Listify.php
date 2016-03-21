@@ -122,6 +122,14 @@ trait Listify
                 }
                 break;
 
+            case 'scope':
+                $normalizedScope = $this->normalizeListifyScope($value);
+
+                if (null !== $normalizedScope && ! is_string($normalizedScope)) {
+                    throw new \InvalidArgumentException("Given list scope does not resolve to a usable where clause");
+                }
+                break;
+
             // default omitted on purpose
         }
 
