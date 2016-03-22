@@ -235,6 +235,8 @@ trait Listify
      */
     public function getListifyPosition()
     {
+        if ($this->excludeFromList()) return null;
+
         return $this->getAttribute($this->positionColumn());
     }
 
