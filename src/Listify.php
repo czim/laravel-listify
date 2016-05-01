@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Support\Arr;
 use InvalidArgumentException;
 
 /**
@@ -66,7 +67,7 @@ trait Listify
     {
         static::deleting(function (Model $model) {
             /** @var Listify $model */
-            $model->setListifyPosition(array_get($model->getOriginal(), $model->positionColumn()));
+            $model->setListifyPosition(Arr::get($model->getOriginal(), $model->positionColumn()));
         });
 
         static::deleted(function (Model $model) {
@@ -640,7 +641,7 @@ trait Listify
         if ($scope instanceof BelongsTo) {
             // for BelongsTo scopes, use a cleaner way to check for differences
             $foreignKey = $scope->getForeignKey();
-            return (array_get($this->getOriginal(), $foreignKey) != $this->getAttribute($foreignKey));
+            return (Arr::get($this->getOriginal(), $foreignKey) != $this->getAttribute($foreignKey));
         }
 
         if (null === $this->stringScopeValue && ! $this->stringScopeNullExplicitlySet) {
@@ -912,7 +913,7 @@ trait Listify
 
         if ($count < 2) return;
 
-        $oldPosition = array_get($this->getOriginal(), $this->positionColumn(), false);
+        $oldPosition = Arr::get($this->getOriginal(), $this->positionColumn(), false);
 
         if (false === $oldPosition) return;
 
