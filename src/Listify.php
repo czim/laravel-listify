@@ -66,7 +66,7 @@ trait Listify
     {
         static::deleting(function (Model $model) {
             /** @var Listify $model */
-            $model->setListifyPosition($model->getOriginal()[ $model->positionColumn() ]);
+            $model->setListifyPosition(array_get($model->getOriginal(), $model->positionColumn()));
         });
 
         static::deleted(function (Model $model) {
@@ -639,7 +639,8 @@ trait Listify
 
         if ($scope instanceof BelongsTo) {
             // for BelongsTo scopes, use a cleaner way to check for differences
-            return ($this->getOriginal()[ $scope->getForeignKey() ] != $this->getAttribute( $scope->getForeignKey()));
+            $foreignKey = $scope->getForeignKey();
+            return (array_get($this->getOriginal(), $foreignKey) != $this->getAttribute($foreignKey));
         }
 
         if (null === $this->stringScopeValue && ! $this->stringScopeNullExplicitlySet) {
