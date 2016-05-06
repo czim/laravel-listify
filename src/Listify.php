@@ -749,8 +749,8 @@ trait Listify
         if (method_exists($this, 'cleanListifyScopedQuery')) {
             $model = $this->cleanListifyScopedQuery($model);
         }
-        
-        return $model->listifyScope();
+
+        return $model->whereRaw($this->scopeCondition());
     }
 
     /**
