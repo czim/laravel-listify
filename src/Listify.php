@@ -744,6 +744,12 @@ trait Listify
 
         $model->setListifyConfig('scope', $this->scopeCondition());
 
+        // if set, call a method that may be used to remove global scopes
+        // and other automatically active listify-scope breaking clauses
+        if (method_exists($this, 'cleanListifyScopedQuery')) {
+            $model = $this->cleanListifyScopedQuery($model);
+        }
+        
         return $model->listifyScope();
     }
 
