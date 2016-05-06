@@ -53,6 +53,28 @@ Note that this package has been tested with the original listify PHPUnit tests a
 Finally, this trait may be used with inheritance (because its base scope is `protected` rather than `private`). You can make a 'BaseListifyModel' and extend that to avoid code (or setup) duplication. 
 
 
+## Dealing with global scopes
+
+When using global scopes on a listified model, this may break expected functionality, especially when the global scope affects how the records are ordered. To deal with this, listify will check for a method to clean up the scope as required. To use this, simply add an implementation of the following method to your listified model class:
+
+```php
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function cleanListifyScopedQuery($query)
+    {
+        // Return the query builder after applying the necessary cleanup
+        // operations on it. In this example, a global scope ordering the
+        // records by their position column is disabled by using unordered()
+        return $query->unordered();
+    }
+```
+
+This method will be called any time that listify performs checks and operations on the model 
+for which it needs access (and its own ordering).
+
+
 ## To Do
 
 - The way string (and QueryBuilder) scopes work is slightly strange. 
