@@ -209,7 +209,7 @@ trait Listify
      */
     public function scopeListifyScope(Builder $query)
     {
-        return $query->whereRaw($this->scopeCondition());
+        return $query->whereRaw($this->listifyScopeCondition());
     }
 
     /**
@@ -723,7 +723,7 @@ trait Listify
      *
      * @return string
      */
-    protected function scopeCondition()
+    protected function listifyScopeCondition()
     {
         $this->stringScopeValue = $this->normalizeListifyScope($this->scopeName());
 
@@ -742,7 +742,7 @@ trait Listify
     {
         $model = new static;
 
-        $model->setListifyConfig('scope', $this->scopeCondition());
+        $model->setListifyConfig('scope', $this->listifyScopeCondition());
 
         // if set, call a method that may be used to remove global scopes
         // and other automatically active listify-scope breaking clauses
@@ -750,7 +750,7 @@ trait Listify
             $model = $this->cleanListifyScopedQuery($model);
         }
 
-        return $model->whereRaw($this->scopeCondition());
+        return $model->whereRaw($this->listifyScopeCondition());
     }
 
     /**
