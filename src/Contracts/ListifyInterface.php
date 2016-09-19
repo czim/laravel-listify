@@ -61,7 +61,7 @@ interface ListifyInterface
      *
      * @return mixed
      */
-    public function scopeName();
+    public function getScopeName();
 
     /**
      * Returns the position indicator to add new entries to.

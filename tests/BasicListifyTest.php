@@ -15,7 +15,7 @@ class BasicListifyTest extends TestCase
 
         $this->assertEquals(1, $model->listifyTop(), "Incorrect listifyTop value");
         $this->assertEquals('position', $model->positionColumn(), "Incorrect positionColumn value");
-        $this->assertEquals('1 = 1', $model->scopeName(), "Incorrect scopeName value");
+        $this->assertEquals('1 = 1', $model->getScopeName(), "Incorrect scopeName value");
         $this->assertEquals('bottom', $model->addNewAt(), "Incorrect addNewAt value");
     }
 
@@ -33,7 +33,7 @@ class BasicListifyTest extends TestCase
         $this->assertEquals('e_position', $model->positionColumn(), "Incorrect positionColumn value");
 
         $model->setListifyConfig('scope', '2 = 2');
-        $this->assertEquals('2 = 2', $model->scopeName(), "Incorrect scopeName value");
+        $this->assertEquals('2 = 2', $model->getScopeName(), "Incorrect scopeName value");
 
         $model->setListifyConfig('add_new_at', 'top');
         $this->assertEquals('top', $model->addNewAt(), "Incorrect addNewAt value");

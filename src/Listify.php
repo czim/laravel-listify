@@ -169,7 +169,7 @@ trait Listify
      *
      * @return mixed
      */
-    public function scopeName()
+    public function getScopeName()
     {
         return $this->getListifyConfigValue('scope');
     }
@@ -625,7 +625,7 @@ trait Listify
      */
     protected function rememberCurrentlyUsedScope()
     {
-        $this->stringScopeValue = $this->normalizeListifyScope($this->scopeName());
+        $this->stringScopeValue = $this->normalizeListifyScope($this->getScopeName());
     }
 
     /**
@@ -636,7 +636,7 @@ trait Listify
      */
     protected function hasListifyScopeChanged()
     {
-        $scope = $this->normalizeListifyScope($this->scopeName(), true);
+        $scope = $this->normalizeListifyScope($this->getScopeName(), true);
 
         if ($scope instanceof BelongsTo) {
             // for BelongsTo scopes, use a cleaner way to check for differences
@@ -651,7 +651,7 @@ trait Listify
             if (null !== $scope && $this->hasVariableListifyScope()) {
                 
                 $this->swapChangedAttributes();
-                $previousScope = $this->normalizeListifyScope($this->scopeName());
+                $previousScope = $this->normalizeListifyScope($this->getScopeName());
                 $this->swapChangedAttributes();
                 
                 if (null === $previousScope) return true;
@@ -673,7 +673,7 @@ trait Listify
      */
     protected function excludeFromList()
     {
-        $scope = $this->normalizeListifyScope($this->scopeName());
+        $scope = $this->normalizeListifyScope($this->getScopeName());
 
         return (null === $scope);
     }
@@ -685,7 +685,7 @@ trait Listify
      */
     protected function hasVariableListifyScope()
     {
-        $scope = $this->scopeName();
+        $scope = $this->getScopeName();
         
         return ($scope instanceof BelongsTo || is_callable($scope));
     }
@@ -725,7 +725,7 @@ trait Listify
      */
     protected function listifyScopeCondition()
     {
-        $this->stringScopeValue = $this->normalizeListifyScope($this->scopeName());
+        $this->stringScopeValue = $this->normalizeListifyScope($this->getScopeName());
 
         $this->stringScopeNullExplicitlySet = (null === $this->stringScopeValue);
 
