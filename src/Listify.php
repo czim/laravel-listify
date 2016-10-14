@@ -404,8 +404,6 @@ trait Listify
             $this->setListPosition($this->listifyTop());
         });
 
-
-
         return $this;
     }
 
