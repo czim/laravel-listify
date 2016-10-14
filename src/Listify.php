@@ -332,13 +332,17 @@ trait Listify
      */
     public function moveLower()
     {
-        if ( ! $this->lowerItem()) return $this;
+        $lowerItem = $this->lowerItem();
 
-        $this->getConnection()->transaction(function() {
+        if ( ! $lowerItem) return $this;
 
-            $this->lowerItem()->decrement($this->positionColumn());
+        $this->getConnection()->transaction(function() use($lowerItem) {
 
             $this->increment($this->positionColumn());
+
+            // Decrement is not guaranteed to work with global scopes
+            $lowerItem->{$this->positionColumn()} = $lowerItem->{$this->positionColumn()} - 1;
+            $lowerItem->save();
         });
 
         return $this;
@@ -352,13 +356,17 @@ trait Listify
      */
     public function moveHigher()
     {
-        if ( ! $this->higherItem()) return $this;
+        $higherItem = $this->higherItem();
 
-        $this->getConnection()->transaction(function() {
+        if ( ! $higherItem) return $this;
 
-            $this->higherItem()->increment($this->positionColumn());
+        $this->getConnection()->transaction(function() use ($higherItem) {
 
             $this->decrement($this->positionColumn());
+
+            // Increment is not guaranteed to work with global scopes,
+            $higherItem->{$this->positionColumn()} = $higherItem->{$this->positionColumn()} + 1;
+            $higherItem->save();
         });
 
         return $this;
