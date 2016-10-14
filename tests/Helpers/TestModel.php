@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string  $name
  * @property integer $scope
  * @property integer $position
+ * @property bool    $active
  */
 class TestModel extends Model implements ListifyInterface
 {
@@ -26,6 +27,7 @@ class TestModel extends Model implements ListifyInterface
     
     protected $casts = [
         'position' => 'integer',
+        'active'   => 'boolean',
     ];
 
     public function __construct(array $attributes = [])

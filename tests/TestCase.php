@@ -2,7 +2,6 @@
 namespace Czim\Listify\Test;
 
 use Illuminate\Support\Facades\Schema;
-use Mockery;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -44,6 +43,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
             $table->integer('scope')->unsigned()->nullable();
             $table->integer('test_related_model_id')->nullable()->unsigned();
             $table->integer('position')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
 
