@@ -209,6 +209,10 @@ trait Listify
      */
     public function scopeListifyScope(Builder $query)
     {
+        if (method_exists($this, 'cleanListifyScopedQuery')) {
+            $this->cleanListifyScopedQuery($query);
+        }
+
         return $query->whereRaw($this->listifyScopeCondition());
     }
 
