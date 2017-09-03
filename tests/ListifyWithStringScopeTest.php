@@ -60,9 +60,6 @@ class ListifyWithStringScopeTest extends StandardListifyTest
     //      Setup and Helper methods
     // ------------------------------------------------------------------------------
 
-    /**
-     * @before
-     */
     protected function seedDatabase()
     {
         // set the standard models in the default scope

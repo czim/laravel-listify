@@ -61,9 +61,6 @@ class ListifyWithBelongsToScopeTest extends StandardListifyTest
     //      Setup and Helper methods
     // ------------------------------------------------------------------------------
 
-    /**
-     * @before
-     */
     protected function seedDatabase()
     {
         // first we require related models to be able to set foreign keys for

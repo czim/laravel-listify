@@ -369,9 +369,6 @@ class StandardListifyTest extends TestCase
     //      Setup and Helper methods
     // ------------------------------------------------------------------------------
 
-    /**
-     * @before
-     */
     protected function seedDatabase()
     {
         for ($x = 0; $x < 5; $x++) {

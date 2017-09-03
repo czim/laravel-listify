@@ -10,10 +10,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
 
 
     /**
-     * Define environment setup.
-     *
-     * @param  \Illuminate\Foundation\Application  $app
-     * @return void
+     * {@inheritdoc}
      */
     protected function getEnvironmentSetUp($app)
     {
@@ -32,6 +29,10 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
         parent::setUp();
 
         $this->migrateDatabase();
+
+        if (method_exists($this, 'seedDatabase')) {
+            $this->seedDatabase();
+        }
     }
 
 
