@@ -650,7 +650,7 @@ trait Listify
 
         if ($scope instanceof BelongsTo) {
             // for BelongsTo scopes, use a cleaner way to check for differences
-            $foreignKey = $scope->getForeignKey();
+            $foreignKey = $scope->getForeignKeyName();
             return (Arr::get($this->getOriginal(), $foreignKey) != $this->getAttribute($foreignKey));
         }
 
@@ -1024,12 +1024,12 @@ trait Listify
      */
     protected function getConditionStringFromBelongsTo(BelongsTo $relation)
     {
-        $id = $this->getAttribute( $relation->getForeignKey() );
+        $id = $this->getAttribute( $relation->getForeignKeyName() );
 
         // an empty foreign key will, as a null-scope, remove the item from any list
         if (null === $id) return null;
 
-        return '`' . $relation->getForeignKey() . '` = ' . (int) $id;
+        return '`' . $relation->getForeignKeyName() . '` = ' . (int) $id;
     }
 
     /**
