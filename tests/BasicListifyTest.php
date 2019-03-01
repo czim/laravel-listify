@@ -69,7 +69,7 @@ class BasicListifyTest extends TestCase
      */
     function it_throws_an_exception_when_config_setting_for_add_new_at_has_no_method()
     {
-        $this->expectException(ModelNotFoundException::class);
+        $this->expectException(\UnexpectedValueException::class);
 
         $model = new TestModel;
 
