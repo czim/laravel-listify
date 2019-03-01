@@ -115,9 +115,6 @@ class ListifyWithCallableScopeTest extends StandardListifyTest
     //      Setup and Helper methods
     // ------------------------------------------------------------------------------
 
-    /**
-     * @before
-     */
     protected function seedDatabase()
     {
         parent::seedDatabase();

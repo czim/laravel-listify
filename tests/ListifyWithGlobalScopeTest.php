@@ -7,9 +7,6 @@ use Czim\Listify\Test\Helpers\TestModelWithGlobalScope;
 class ListifyWithGlobalScopeTest extends StandardListifyTest
 {
 
-    /**
-     * @before
-     */
     protected function seedDatabase()
     {
         // set the standard models in the default scope

@@ -14,6 +14,14 @@ class StandardListifyTest extends TestCase
     protected $regexpScopePart = '1 = 1';
 
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->seedDatabase();
+    }
+
+
     /**
      * @test
      */
@@ -369,9 +377,6 @@ class StandardListifyTest extends TestCase
     //      Setup and Helper methods
     // ------------------------------------------------------------------------------
 
-    /**
-     * @before
-     */
     protected function seedDatabase()
     {
         for ($x = 0; $x < 5; $x++) {

@@ -17,6 +17,8 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
      */
     protected function getEnvironmentSetUp($app)
     {
+        parent::getEnvironmentSetUp($app);
+
         // Setup default database to use sqlite :memory:
         $app['config']->set('database.default', 'testbench');
         $app['config']->set('database.connections.testbench', [
@@ -27,7 +29,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
     }
 
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
