@@ -10,6 +10,14 @@ This is a rebuild (from scratch) of [Lookitsatravis' Listify](https://github.com
 It uses the same interface as Listify, so switching from that to this package should not break anything.
 
 
+## Version Compatibility
+
+ Laravel         | Package 
+:----------------|:--------
+ 5.7.x and older | 1.0
+ 5.8 and up      | 1.1
+ 
+ 
 ## Why?
 
 Listify is *great*, but has a few shortcomings:
