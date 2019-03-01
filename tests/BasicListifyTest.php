@@ -2,6 +2,7 @@
 namespace Czim\Listify\Test;
 
 use Czim\Listify\Test\Helpers\TestModel;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class BasicListifyTest extends TestCase
 {
@@ -65,10 +66,11 @@ class BasicListifyTest extends TestCase
 
     /**
      * @test
-     * @expectedException \UnexpectedValueException
      */
     function it_throws_an_exception_when_config_setting_for_add_new_at_has_no_method()
     {
+        $this->expectException(ModelNotFoundException::class);
+
         $model = new TestModel;
 
         $model->setListifyConfig('add_new_at', 'existsNot');
