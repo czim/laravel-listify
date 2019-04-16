@@ -827,30 +827,30 @@ trait Listify
      */
     protected function reorderPositionsOnItemsBetween($positionBefore, $positionAfter, $ignoreId = null)
     {
-        if ($positionBefore == $positionAfter) return;
+        if ($positionBefore == $positionAfter) {
+            return;
+        }
 
-        $ignoreIdCondition = '1 = 1';
+        $query = $this->listifyScopedQuery();
 
         if ($ignoreId) {
-            $ignoreIdCondition = $this->getPrimaryKey() . ' != ' . $ignoreId;
+            $query->where($this->getPrimaryKey(), '!=', $ignoreId);
         }
 
         if ($positionBefore < $positionAfter) {
             // increment the in-between positions
 
-            $this->listifyScopedQuery()
+            $query
                 ->where($this->positionColumn(), '>', $positionBefore)
                 ->where($this->positionColumn(), '<=', $positionAfter)
-                ->whereRaw($ignoreIdCondition)
                 ->decrement($this->positionColumn());
 
         } else {
             // decrement the in-between positions
 
-            $this->listifyScopedQuery()
+            $query
                 ->where($this->positionColumn(), '>=', $positionAfter)
                 ->where($this->positionColumn(), '<', $positionBefore)
-                ->whereRaw($ignoreIdCondition)
                 ->increment($this->positionColumn());
         }
     }
