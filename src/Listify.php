@@ -13,6 +13,7 @@ use InvalidArgumentException;
  *
  * @method static QueryBuilder|Model listifyScope()
  * @method static QueryBuilder|Model inList()
+ * @mixin \Illuminate\Database\Eloquent\Model
  */
 trait Listify
 {
