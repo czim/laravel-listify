@@ -2,6 +2,7 @@
 namespace Czim\Listify\Contracts;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
 interface ListifyInterface
 {
@@ -11,16 +12,16 @@ interface ListifyInterface
      *
      * @param array $options
      */
-    public function initListify(array $options = []);
+    public function initListify(array $options = []): void;
 
     /**
      * Sets a listify config value.
      *
-     * @param string
-     * @param mixed
+     * @param string $key
+     * @param mixed  $value
      * @return $this
      */
-    public function setListifyConfig($key, $value);
+    public function setListifyConfig(string $key, $value);
 
 
 
@@ -30,7 +31,7 @@ interface ListifyInterface
      * @param Builder $query
      * @return Builder
      */
-    public function scopeListifyScope(Builder $query);
+    public function scopeListifyScope(Builder $query): Builder;
 
     /**
      * Applies conditions to a query in order to retrieve only the records that are in a list.
@@ -38,23 +39,23 @@ interface ListifyInterface
      * @param Builder $query
      * @return Builder
      */
-    public function scopeInList(Builder $query);
+    public function scopeInList(Builder $query): Builder;
 
 
 
     /**
      * Returns the position to use as 'top of the list'.
      *
-     * @return string
+     * @return int
      */
-    public function listifyTop();
+    public function listifyTop(): int;
 
     /**
      * Returns the name of the position column.
      *
      * @return string
      */
-    public function positionColumn();
+    public function positionColumn(): string;
 
     /**
      * Returns the listify scope definition.
@@ -68,15 +69,15 @@ interface ListifyInterface
      *
      * @return string   bottom or top
      */
-    public function addNewAt();
+    public function addNewAt(): string;
 
 
     /**
      * Returns the record's current list position
      *
-     * @return integer
+     * @return null|integer
      */
-    public function getListifyPosition();
+    public function getListifyPosition(): ?int;
 
     /**
      * Sets the record's current list position directly.
@@ -85,17 +86,17 @@ interface ListifyInterface
      * @param integer $position
      * @return $this
      */
-    public function setListifyPosition($position);
+    public function setListifyPosition(?int $position);
 
 
     /**
      * Inserts record at the given position.
      * This re-arranges the affected surrounding records.
      *
-     * @param integer $position default is listifyTop()
+     * @param integer $position     default is listifyTop()
      * @return $this
      */
-    public function insertAt($position = null);
+    public function insertAt(?int $position = null);
 
     /**
      * Moves the record down a position.
@@ -143,7 +144,7 @@ interface ListifyInterface
      * @param integer $count    default 1
      * @return $this
      */
-    public function incrementPosition($count = 1);
+    public function incrementPosition(int $count = 1);
 
     /**
      * Decrease the position of the record without affecting other record positions.
@@ -151,7 +152,7 @@ interface ListifyInterface
      * @param integer $count    default 1
      * @return $this
      */
-    public function decrementPosition($count = 1);
+    public function decrementPosition(int $count = 1);
 
 
     /**
@@ -159,14 +160,14 @@ interface ListifyInterface
      *
      * @return boolean      also false if the record is not in a list
      */
-    public function isFirst();
+    public function isFirst(): bool;
 
     /**
      * Returns whether the record is at the bottom of the list.
      *
      * @return boolean      also false if the record is not in a list
      */
-    public function isLast();
+    public function isLast(): bool;
 
     /**
      * Returns the previous record on the list, the one above the current record.
@@ -182,7 +183,7 @@ interface ListifyInterface
      * @param null|integer $limit    the maximum number of records to retrieve
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function higherItems($limit = null);
+    public function higherItems(?int $limit = null): Collection;
 
     /**
      * Returns the next record on the list, the one below the current record.
@@ -197,7 +198,7 @@ interface ListifyInterface
      * @param null|integer $limit    the maximum number of records to retrieve
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function lowerItems($limit = null);
+    public function lowerItems(?int $limit = null): Collection;
 
 
     /**
@@ -205,36 +206,36 @@ interface ListifyInterface
      *
      * @return boolean
      */
-    public function isInList();
+    public function isInList(): bool;
 
     /**
      * Returns whether the record is not in a list
      *
      * @return boolean
      */
-    public function isNotInList();
+    public function isNotInList(): bool;
 
     /**
      * Returns the default position to set for new records
      *
      * @return null|integer
      */
-    public function defaultPosition();
+    public function defaultPosition(): ?int;
 
     /**
      * Returns whether the records position is equal to the default
      *
      * @return boolean
      */
-    public function isDefaultPosition();
+    public function isDefaultPosition(): bool;
 
     /**
      * Sets a new position for the record and saves it
      *
-     * @param integer $position
+     * @param integer|null $position
      * @return bool
      */
-    public function setListPosition($position);
+    public function setListPosition(?int $position): bool;
 
     /**
      * Swaps changed (original) attributes with current attributes
