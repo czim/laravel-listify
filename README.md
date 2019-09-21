@@ -18,6 +18,9 @@ It uses the same interface as Listify, so switching from that to this package sh
  5.8 - 5.9       | 1.1
  6.0 and up      | 2.0
  
+## Changelog
+
+[View the changelog](CHANGELOG.md).
  
 ## Why?
 
