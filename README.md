@@ -14,8 +14,9 @@ It uses the same interface as Listify, so switching from that to this package sh
 
  Laravel         | Package 
 :----------------|:--------
- 5.7.x and older | 1.0
- 5.8 and up      | 1.1
+ 5.7 and older   | 1.0
+ 5.8 - 5.9       | 1.1
+ 6.0 and up      | 2.0
  
  
 ## Why?
