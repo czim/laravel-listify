@@ -4,10 +4,9 @@ namespace Czim\Listify\Test\Helpers;
 use Czim\Listify\Contracts\ListifyInterface;
 use Czim\Listify\Listify;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * Class TestModel
- *
  * @property integer $id
  * @property string  $name
  * @property integer $scope
@@ -24,7 +23,7 @@ class TestModel extends Model implements ListifyInterface
         'position',
         'test_related_model_id',
     ];
-    
+
     protected $casts = [
         'position' => 'integer',
         'active'   => 'boolean',
@@ -36,8 +35,8 @@ class TestModel extends Model implements ListifyInterface
 
         $this->initListify();
     }
-    
-    public function testRelatedModel()
+
+    public function testRelatedModel(): BelongsTo
     {
         return $this->belongsTo(TestRelatedModel::class);
     }

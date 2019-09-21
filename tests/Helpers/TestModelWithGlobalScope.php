@@ -1,6 +1,8 @@
 <?php
 namespace Czim\Listify\Test\Helpers;
 
+use Illuminate\Database\Eloquent\Builder;
+
 /**
  * Class TestModelWithGlobalScope
  */
@@ -17,10 +19,10 @@ class TestModelWithGlobalScope extends TestModel
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param Builder $query
+     * @return Builder
      */
-    public function cleanListifyScopedQuery($query)
+    public function cleanListifyScopedQuery($query): Builder
     {
         return $query->withoutGlobalScopes();
     }

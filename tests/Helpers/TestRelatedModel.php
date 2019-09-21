@@ -2,10 +2,9 @@
 namespace Czim\Listify\Test\Helpers;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Class TestRelatedModel
- *
  * @property integer $id
  * @property string  $name
  */
@@ -14,8 +13,8 @@ class TestRelatedModel extends Model
     protected $fillable = [
         'name',
     ];
-    
-    public function testModels()
+
+    public function testModels(): HasMany
     {
         return $this->hasMany(TestModel::class);
     }

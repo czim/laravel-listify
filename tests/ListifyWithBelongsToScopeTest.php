@@ -1,4 +1,7 @@
 <?php
+/** @noinspection ReturnTypeCanBeDeclaredInspection */
+/** @noinspection AccessModifierPresentedInspection */
+
 namespace Czim\Listify\Test;
 
 use Czim\Listify\Test\Helpers\TestModel;
@@ -9,23 +12,25 @@ class ListifyWithBelongsToScopeTest extends StandardListifyTest
 
     protected $regexpScopePart = '`test_related_model_id` = [\'"]?3[\'"]?';
 
-    
+
     /**
      * @test
      */
     function it_leaves_records_with_scoped_null_foreign_key_out_of_any_list()
     {
         // create a record that should be kept out of lists
-        $model = $this->createNewStandardModel([ 'test_related_model_id' => null ]);
+        $model = $this->createNewStandardModel([
+            'test_related_model_id' => null,
+        ]);
 
-        $this->assertFalse($model->isInList(), "Model with null foreign key should not be in list");
+        $this->assertFalse($model->isInList(), 'Model with null foreign key should not be in list');
 
         // add it to a list/scope
         $model->testRelatedModel()->associate(TestRelatedModel::find(3));
         $model->save();
         $model = $model->fresh();
 
-        $this->assertEquals(6, $model->getListifyPosition(), "New Model should be at position 6");
+        $this->assertEquals(6, $model->getListifyPosition(), 'New Model should be at position 6');
 
         $model->delete();
 
@@ -37,7 +42,7 @@ class ListifyWithBelongsToScopeTest extends StandardListifyTest
         $model->save();
         $model = $model->fresh();
 
-        $this->assertFalse($model->isInList(), "New model with empty foreign key should not be in a list");
+        $this->assertFalse($model->isInList(), 'New model with empty foreign key should not be in a list');
 
         $model->delete();
 
@@ -49,11 +54,11 @@ class ListifyWithBelongsToScopeTest extends StandardListifyTest
         $model->save();
         $model = $model->fresh();
 
-        $this->assertNull($model->getListifyPosition(), "New Model should have null position");
-        $this->assertEquals(1, TestModel::find(1)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(2, TestModel::find(2)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(3, TestModel::find(4)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(4, TestModel::find(5)->getListifyPosition(), "Other record position incorrect");
+        $this->assertNull($model->getListifyPosition(), 'New Model should have null position');
+        $this->assertEquals(1, TestModel::find(1)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(2, TestModel::find(2)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(3, TestModel::find(4)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(4, TestModel::find(5)->getListifyPosition(), 'Other record position incorrect');
     }
 
 
@@ -61,7 +66,7 @@ class ListifyWithBelongsToScopeTest extends StandardListifyTest
     //      Setup and Helper methods
     // ------------------------------------------------------------------------------
 
-    protected function seedDatabase()
+    protected function seedDatabase(): void
     {
         // first we require related models to be able to set foreign keys for
         for ($x = 0; $x < 3; $x++) {
@@ -96,7 +101,7 @@ class ListifyWithBelongsToScopeTest extends StandardListifyTest
      * @param array $data
      * @return TestModel
      */
-    protected function makeNewStandardModel(array $data = [])
+    protected function makeNewStandardModel(array $data = []): TestModel
     {
         $model = parent::makeNewStandardModel($data);
 
@@ -114,7 +119,7 @@ class ListifyWithBelongsToScopeTest extends StandardListifyTest
      * @param int $id
      * @return TestModel
      */
-    protected function findStandardModel($id)
+    protected function findStandardModel(int $id): TestModel
     {
         $model = parent::findStandardModel($id);
 

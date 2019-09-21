@@ -2,20 +2,20 @@
 namespace Czim\Listify\Test;
 
 use Illuminate\Support\Facades\Schema;
+use Orchestra\Testbench\TestCase as TestbenchTestCase;
 
-abstract class TestCase extends \Orchestra\Testbench\TestCase
+abstract class TestCase extends TestbenchTestCase
 {
-    const TABLE_NAME_SIMPLE  = 'test_models';
-    const TABLE_NAME_RELATED = 'test_related_models';
+    public const TABLE_NAME_SIMPLE  = 'test_models';
+    public const TABLE_NAME_RELATED = 'test_related_models';
 
 
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application  $app
-     * @return void
+     * @param \Illuminate\Foundation\Application  $app
      */
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         parent::getEnvironmentSetUp($app);
 
@@ -37,9 +37,9 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
     }
 
 
-    protected function migrateDatabase()
+    protected function migrateDatabase(): void
     {
-        Schema::create(self::TABLE_NAME_SIMPLE, function($table) {
+        Schema::create(self::TABLE_NAME_SIMPLE, function ($table) {
             $table->increments('id');
             $table->string('name', 255)->nullable();
             $table->integer('scope')->unsigned()->nullable();
@@ -49,7 +49,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
             $table->timestamps();
         });
 
-        Schema::create(self::TABLE_NAME_RELATED, function($table) {
+        Schema::create(self::TABLE_NAME_RELATED, function ($table) {
             $table->increments('id');
             $table->string('name', 255)->nullable();
             $table->timestamps();

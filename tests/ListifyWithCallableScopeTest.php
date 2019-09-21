@@ -1,4 +1,7 @@
 <?php
+/** @noinspection ReturnTypeCanBeDeclaredInspection */
+/** @noinspection AccessModifierPresentedInspection */
+
 namespace Czim\Listify\Test;
 
 use Czim\Listify\Test\Helpers\TestModel;
@@ -8,7 +11,7 @@ class ListifyWithCallableScopeTest extends StandardListifyTest
 
     protected $regexpScopePart = '`scope` = [\'"]?2[\'"]?';
 
-    
+
     /**
      * @test
      */
@@ -16,17 +19,17 @@ class ListifyWithCallableScopeTest extends StandardListifyTest
     {
         // new model outside of scope 1/2 should have position 2
         $model = $this->createNewModelWithCallableScope([ 'scope' => null ]);
-        $this->assertEquals(2, $model->getListifyPosition(), "null-scoped model should have position 2");
+        $this->assertEquals(2, $model->getListifyPosition(), 'null-scoped model should have position 2');
         $model->delete();
 
         // model in scope with 3 items should get position 4
         $model = $this->createNewModelWithCallableScope([ 'scope' => 1 ]);
-        $this->assertEquals(3, $model->getListifyPosition(), "1-scoped model should have position 3");
+        $this->assertEquals(3, $model->getListifyPosition(), '1-scoped model should have position 3');
         $model->delete();
 
         // model in scope with 2 items should get position 3
         $model = $this->createNewModelWithCallableScope([ 'scope' => 2 ]);
-        $this->assertEquals(6, $model->getListifyPosition(), "2-scoped model should have position 6");
+        $this->assertEquals(6, $model->getListifyPosition(), '2-scoped model should have position 6');
         $model->delete();
     }
 
@@ -42,7 +45,7 @@ class ListifyWithCallableScopeTest extends StandardListifyTest
         $model->save();
         $model = $model->fresh();
 
-        $this->assertEquals(6, $model->getListifyPosition(), "New Model should be at position 6 in scope 2");
+        $this->assertEquals(6, $model->getListifyPosition(), 'New Model should be at position 6 in scope 2');
         $model->delete();
 
         // a model that was in the middle of one scope, then moved to another
@@ -53,14 +56,14 @@ class ListifyWithCallableScopeTest extends StandardListifyTest
         $model->save();
         $model = $model->fresh();
 
-        $this->assertEquals(3, $model->getListifyPosition(), "New Model should be at position 3 in scope 1");
-        $this->assertEquals(1, TestModel::find(1)->getListifyPosition(), "Other record position incorrect (2)");
-        $this->assertEquals(2, TestModel::find(3)->getListifyPosition(), "Other record position incorrect (1)");
-        $this->assertEquals(3, TestModel::find(4)->getListifyPosition(), "Other record position incorrect (1)");
-        $this->assertEquals(4, TestModel::find(5)->getListifyPosition(), "Other record position incorrect (1)");
-        $this->assertEquals(1, TestModel::find(6)->getListifyPosition(), "Other record position incorrect (null)");
-        $this->assertEquals(1, TestModel::find(7)->getListifyPosition(), "Other record position incorrect (2)");
-        $this->assertEquals(2, TestModel::find(8)->getListifyPosition(), "Other record position incorrect (2)");
+        $this->assertEquals(3, $model->getListifyPosition(), 'New Model should be at position 3 in scope 1');
+        $this->assertEquals(1, TestModel::find(1)->getListifyPosition(), 'Other record position incorrect (2)');
+        $this->assertEquals(2, TestModel::find(3)->getListifyPosition(), 'Other record position incorrect (1)');
+        $this->assertEquals(3, TestModel::find(4)->getListifyPosition(), 'Other record position incorrect (1)');
+        $this->assertEquals(4, TestModel::find(5)->getListifyPosition(), 'Other record position incorrect (1)');
+        $this->assertEquals(1, TestModel::find(6)->getListifyPosition(), 'Other record position incorrect (null)');
+        $this->assertEquals(1, TestModel::find(7)->getListifyPosition(), 'Other record position incorrect (2)');
+        $this->assertEquals(2, TestModel::find(8)->getListifyPosition(), 'Other record position incorrect (2)');
     }
 
     /**
@@ -76,8 +79,8 @@ class ListifyWithCallableScopeTest extends StandardListifyTest
         $model->save();
         $model = $model->fresh();
 
-        $this->assertEquals(2, $model->scope, "New Model should be at position 6 in scope 2");
-        $this->assertEquals(6, $model->getListifyPosition(), "New Model should be at position 6 in scope 2");
+        $this->assertEquals(2, $model->scope, 'New Model should be at position 6 in scope 2');
+        $this->assertEquals(6, $model->getListifyPosition(), 'New Model should be at position 6 in scope 2');
 
         $model->delete();
 
@@ -90,8 +93,8 @@ class ListifyWithCallableScopeTest extends StandardListifyTest
         $model->save();
         $model = $model->fresh();
 
-        $this->assertEquals(99, $model->scope, "New Model should not be in a list in scope 99");
-        $this->assertFalse($model->isInList(), "New Model should not be in a list in scope 99");
+        $this->assertEquals(99, $model->scope, 'New Model should not be in a list in scope 99');
+        $this->assertFalse($model->isInList(), 'New Model should not be in a list in scope 99');
 
         $model->delete();
 
@@ -103,11 +106,11 @@ class ListifyWithCallableScopeTest extends StandardListifyTest
         $model->save();
         $model = $model->fresh();
 
-        $this->assertNull($model->getListifyPosition(), "New Model should have null position in scope 99");
-        $this->assertEquals(1, TestModel::find(1)->getListifyPosition(), "Other record position incorrect (2)");
-        $this->assertEquals(2, TestModel::find(2)->getListifyPosition(), "Other record position incorrect (2)");
-        $this->assertEquals(3, TestModel::find(4)->getListifyPosition(), "Other record position incorrect (2)");
-        $this->assertEquals(4, TestModel::find(5)->getListifyPosition(), "Other record position incorrect (2)");
+        $this->assertNull($model->getListifyPosition(), 'New Model should have null position in scope 99');
+        $this->assertEquals(1, TestModel::find(1)->getListifyPosition(), 'Other record position incorrect (2)');
+        $this->assertEquals(2, TestModel::find(2)->getListifyPosition(), 'Other record position incorrect (2)');
+        $this->assertEquals(3, TestModel::find(4)->getListifyPosition(), 'Other record position incorrect (2)');
+        $this->assertEquals(4, TestModel::find(5)->getListifyPosition(), 'Other record position incorrect (2)');
     }
 
 
@@ -115,7 +118,7 @@ class ListifyWithCallableScopeTest extends StandardListifyTest
     //      Setup and Helper methods
     // ------------------------------------------------------------------------------
 
-    protected function seedDatabase()
+    protected function seedDatabase(): void
     {
         parent::seedDatabase();
 
@@ -144,7 +147,7 @@ class ListifyWithCallableScopeTest extends StandardListifyTest
      * @param array $data
      * @return TestModel
      */
-    protected function makeNewModelWithCallableScope(array $data = [])
+    protected function makeNewModelWithCallableScope(array $data = []): TestModel
     {
         $model = new TestModel($data);
 
@@ -159,7 +162,7 @@ class ListifyWithCallableScopeTest extends StandardListifyTest
      * @param array $data
      * @return TestModel
      */
-    protected function createNewModelWithCallableScope(array $data = [])
+    protected function createNewModelWithCallableScope(array $data = []): TestModel
     {
         $model = $this->makeNewModelWithCallableScope($data);
         $model->save();
@@ -173,23 +176,29 @@ class ListifyWithCallableScopeTest extends StandardListifyTest
      *
      * @return callable
      */
-    protected function getScopeMethodCallable()
+    protected function getScopeMethodCallable(): callable
     {
-        return function (TestModel $model) { return $this->scopeMethod($model); };
+        return function (TestModel $model) {
+            return $this->scopeMethod($model);
+        };
     }
 
     /**
      * Callable to use as scope setting
      *
      * @param TestModel $model
-     * @return string
+     * @return string|null
      */
-    protected function scopeMethod(TestModel $model)
+    protected function scopeMethod(TestModel $model): ?string
     {
         // null-scope under very specific conditions
-        if ($model->scope == 99) return null;
+        if ($model->scope === 99) {
+            return null;
+        }
 
-        if ( ! $model->scope) return '`scope` is null';
+        if ( ! $model->scope) {
+            return '`scope` is null';
+        }
 
         return '`scope` = ' . (int) $model->scope;
     }
@@ -200,7 +209,7 @@ class ListifyWithCallableScopeTest extends StandardListifyTest
      * @param array $data
      * @return TestModel
      */
-    protected function makeNewStandardModel(array $data = [])
+    protected function makeNewStandardModel(array $data = []): TestModel
     {
         $model = parent::makeNewStandardModel($data);
 
@@ -212,11 +221,7 @@ class ListifyWithCallableScopeTest extends StandardListifyTest
         return $model;
     }
 
-    /**
-     * @param int $id
-     * @return TestModel
-     */
-    protected function findStandardModel($id)
+    protected function findStandardModel(int $id): TestModel
     {
         $model = parent::findStandardModel($id);
 

@@ -2,6 +2,7 @@
 namespace Czim\Listify\Test;
 
 use Czim\Listify\Test\Helpers\TestModel;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
 class ListifyWithQueryBuilderScopeTest extends StandardListifyTest
@@ -20,7 +21,7 @@ class ListifyWithQueryBuilderScopeTest extends StandardListifyTest
      * @param array $data
      * @return TestModel
      */
-    protected function makeNewStandardModel(array $data = [])
+    protected function makeNewStandardModel(array $data = []): TestModel
     {
         $model = parent::makeNewStandardModel($data);
 
@@ -29,11 +30,7 @@ class ListifyWithQueryBuilderScopeTest extends StandardListifyTest
         return $model;
     }
 
-    /**
-     * @param int $id
-     * @return TestModel
-     */
-    protected function findStandardModel($id)
+    protected function findStandardModel(int $id): TestModel
     {
         $model = parent::findStandardModel($id);
 
@@ -42,10 +39,7 @@ class ListifyWithQueryBuilderScopeTest extends StandardListifyTest
         return $model;
     }
 
-    /**
-     * @return \Illuminate\Database\Query\Builder
-     */
-    protected function getScopeQueryBuilder()
+    protected function getScopeQueryBuilder(): Builder
     {
         return DB::table('test_models')->where('name', 'like', '%model%');
     }

@@ -1,4 +1,7 @@
 <?php
+/** @noinspection AccessModifierPresentedInspection */
+/** @noinspection ReturnTypeCanBeDeclaredInspection */
+
 namespace Czim\Listify\Test;
 
 use Czim\Listify\Test\Helpers\TestModel;
@@ -30,7 +33,7 @@ class StandardListifyTest extends TestCase
         $model = $this->findStandardModel(1);
         $regex = '#^select \* from [\'"]?test_models[\'"]? where ' . $this->regexpScopePart . '$#i';
 
-        $this->assertRegExp($regex, $model->listifyScope()->toSql(), "Listify scope does not return correct SQL");
+        $this->assertRegExp($regex, $model->listifyScope()->toSql(), 'Listify scope does not return correct SQL');
     }
 
     /**
@@ -42,7 +45,7 @@ class StandardListifyTest extends TestCase
         $regex = '#^select \* from [\'"]?test_models[\'"]? where ' . $this->regexpScopePart
                . ' and [\'"]?test_models[\'"]?.[\'"]?position[\'"]? is not null$#i';
 
-        $this->assertRegExp($regex, $model->inList()->toSql(), "In list scope does not return correct SQL");
+        $this->assertRegExp($regex, $model->inList()->toSql(), 'In list scope does not return correct SQL');
     }
 
     /**
@@ -54,11 +57,11 @@ class StandardListifyTest extends TestCase
 
         $model->setListPosition(1);
 
-        $this->assertEquals(1, $model->getListifyPosition(), "Model does not have directly set position");
-        $this->assertEquals(2, $this->findStandardModel(1)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(3, $this->findStandardModel(2)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(4, $this->findStandardModel(4)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(5, $this->findStandardModel(5)->getListifyPosition(), "Other record position incorrect");
+        $this->assertEquals(1, $model->getListifyPosition(), 'Model does not have directly set position');
+        $this->assertEquals(2, $this->findStandardModel(1)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(3, $this->findStandardModel(2)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(4, $this->findStandardModel(4)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(5, $this->findStandardModel(5)->getListifyPosition(), 'Other record position incorrect');
     }
 
     /**
@@ -70,11 +73,11 @@ class StandardListifyTest extends TestCase
 
         $model->setListifyPosition(1);
 
-        $this->assertEquals(1, $model->getListifyPosition(), "Model does not have directly set position");
-        $this->assertEquals(1, $this->findStandardModel(1)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(2, $this->findStandardModel(2)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(4, $this->findStandardModel(4)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(5, $this->findStandardModel(5)->getListifyPosition(), "Other record position incorrect");
+        $this->assertEquals(1, $model->getListifyPosition(), 'Model does not have directly set position');
+        $this->assertEquals(1, $this->findStandardModel(1)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(2, $this->findStandardModel(2)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(4, $this->findStandardModel(4)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(5, $this->findStandardModel(5)->getListifyPosition(), 'Other record position incorrect');
     }
 
     /**
@@ -84,7 +87,7 @@ class StandardListifyTest extends TestCase
     {
         $model = $this->createNewStandardModel([ 'name' => 'new bottom model' ]);
 
-        $this->assertEquals(6, $model->getListifyPosition(), "New default bottom position should be 6");
+        $this->assertEquals(6, $model->getListifyPosition(), 'New default bottom position should be 6');
 
         $lowestModelId = $model->id;
 
@@ -92,8 +95,8 @@ class StandardListifyTest extends TestCase
         $model->setListifyConfig('add_new_at', 'top');
         $model->save();
 
-        $this->assertEquals(1, $model->getListifyPosition(), "New default top position should be 1");
-        $this->assertEquals(7, $this->findStandardModel($lowestModelId)->getListifyPosition(), "The bottom record should be at position 7");
+        $this->assertEquals(1, $model->getListifyPosition(), 'New default top position should be 1');
+        $this->assertEquals(7, $this->findStandardModel($lowestModelId)->getListifyPosition(), 'The bottom record should be at position 7');
     }
 
     /**
@@ -106,11 +109,11 @@ class StandardListifyTest extends TestCase
         $model->removeFromList();
         $model = $this->findStandardModel(3);
 
-        $this->assertEquals(null, $model->getListifyPosition(), "Model not without position after removing");
-        $this->assertEquals(1, $this->findStandardModel(1)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(2, $this->findStandardModel(2)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(3, $this->findStandardModel(4)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(4, $this->findStandardModel(5)->getListifyPosition(), "Other record position incorrect");
+        $this->assertEquals(null, $model->getListifyPosition(), 'Model not without position after removing');
+        $this->assertEquals(1, $this->findStandardModel(1)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(2, $this->findStandardModel(2)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(3, $this->findStandardModel(4)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(4, $this->findStandardModel(5)->getListifyPosition(), 'Other record position incorrect');
     }
 
     /**
@@ -122,10 +125,10 @@ class StandardListifyTest extends TestCase
 
         $model->delete();
 
-        $this->assertEquals(1, $this->findStandardModel(1)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(2, $this->findStandardModel(2)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(3, $this->findStandardModel(4)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(4, $this->findStandardModel(5)->getListifyPosition(), "Other record position incorrect");
+        $this->assertEquals(1, $this->findStandardModel(1)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(2, $this->findStandardModel(2)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(3, $this->findStandardModel(4)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(4, $this->findStandardModel(5)->getListifyPosition(), 'Other record position incorrect');
     }
 
     /**
@@ -138,11 +141,11 @@ class StandardListifyTest extends TestCase
         $model->insertAt(4);
         $model = $this->findStandardModel(2);
 
-        $this->assertEquals(4, $model->getListifyPosition(), "Model not in inserted position");
-        $this->assertEquals(1, $this->findStandardModel(1)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(2, $this->findStandardModel(3)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(3, $this->findStandardModel(4)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(5, $this->findStandardModel(5)->getListifyPosition(), "Other record position incorrect");
+        $this->assertEquals(4, $model->getListifyPosition(), 'Model not in inserted position');
+        $this->assertEquals(1, $this->findStandardModel(1)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(2, $this->findStandardModel(3)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(3, $this->findStandardModel(4)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(5, $this->findStandardModel(5)->getListifyPosition(), 'Other record position incorrect');
     }
 
     /**
@@ -159,11 +162,11 @@ class StandardListifyTest extends TestCase
         $model->insertAt(2);
         $model = $this->findStandardModel(3);
 
-        $this->assertEquals(2, $model->getListifyPosition(), "Model not in inserted position");
-        $this->assertEquals(1, $this->findStandardModel(1)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(3, $this->findStandardModel(2)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(4, $this->findStandardModel(4)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(5, $this->findStandardModel(5)->getListifyPosition(), "Other record position incorrect");
+        $this->assertEquals(2, $model->getListifyPosition(), 'Model not in inserted position');
+        $this->assertEquals(1, $this->findStandardModel(1)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(3, $this->findStandardModel(2)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(4, $this->findStandardModel(4)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(5, $this->findStandardModel(5)->getListifyPosition(), 'Other record position incorrect');
     }
 
     /**
@@ -176,8 +179,8 @@ class StandardListifyTest extends TestCase
         $model->moveHigher();
         $model = $this->findStandardModel(3);
 
-        $this->assertEquals(2, $model->getListifyPosition(), "Model not at correct position after moving one up");
-        $this->assertEquals(3, $this->findStandardModel(2)->getListifyPosition(), "Replaced record position incorrect");
+        $this->assertEquals(2, $model->getListifyPosition(), 'Model not at correct position after moving one up');
+        $this->assertEquals(3, $this->findStandardModel(2)->getListifyPosition(), 'Replaced record position incorrect');
     }
 
     /**
@@ -190,8 +193,8 @@ class StandardListifyTest extends TestCase
         $model->moveLower();
         $model = $this->findStandardModel(3);
 
-        $this->assertEquals(4, $model->getListifyPosition(), "Model not at correct position after moving one down");
-        $this->assertEquals(3, $this->findStandardModel(4)->getListifyPosition(), "Replaced record position incorrect");
+        $this->assertEquals(4, $model->getListifyPosition(), 'Model not at correct position after moving one down');
+        $this->assertEquals(3, $this->findStandardModel(4)->getListifyPosition(), 'Replaced record position incorrect');
     }
 
     /**
@@ -204,11 +207,11 @@ class StandardListifyTest extends TestCase
         $model->moveToTop();
         $model = $this->findStandardModel(3);
 
-        $this->assertEquals(1, $model->getListifyPosition(), "Model not at top position after moving");
-        $this->assertEquals(2, $this->findStandardModel(1)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(3, $this->findStandardModel(2)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(4, $this->findStandardModel(4)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(5, $this->findStandardModel(5)->getListifyPosition(), "Other record position incorrect");
+        $this->assertEquals(1, $model->getListifyPosition(), 'Model not at top position after moving');
+        $this->assertEquals(2, $this->findStandardModel(1)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(3, $this->findStandardModel(2)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(4, $this->findStandardModel(4)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(5, $this->findStandardModel(5)->getListifyPosition(), 'Other record position incorrect');
     }
 
     /**
@@ -221,11 +224,11 @@ class StandardListifyTest extends TestCase
         $model->moveToBottom();
         $model = $this->findStandardModel(3);
 
-        $this->assertEquals(5, $model->getListifyPosition(), "Model not at top position after moving");
-        $this->assertEquals(1, $this->findStandardModel(1)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(2, $this->findStandardModel(2)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(3, $this->findStandardModel(4)->getListifyPosition(), "Other record position incorrect");
-        $this->assertEquals(4, $this->findStandardModel(5)->getListifyPosition(), "Other record position incorrect");
+        $this->assertEquals(5, $model->getListifyPosition(), 'Model not at top position after moving');
+        $this->assertEquals(1, $this->findStandardModel(1)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(2, $this->findStandardModel(2)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(3, $this->findStandardModel(4)->getListifyPosition(), 'Other record position incorrect');
+        $this->assertEquals(4, $this->findStandardModel(5)->getListifyPosition(), 'Other record position incorrect');
     }
 
     /**
@@ -237,31 +240,31 @@ class StandardListifyTest extends TestCase
 
         $model->incrementPosition(2);
 
-        $this->assertEquals(4, $model->getListifyPosition(), "Model does not have new position in memory");
+        $this->assertEquals(4, $model->getListifyPosition(), 'Model does not have new position in memory');
 
         $persistedModel = $this->findStandardModel(2);
-        $this->assertEquals(2, $persistedModel->getListifyPosition(), "Model should have old position in database");
+        $this->assertEquals(2, $persistedModel->getListifyPosition(), 'Model should have old position in database');
 
         unset($persistedModel);
 
         // other models should not be affected before saving
-        $this->assertEquals(1, $this->findStandardModel(1)->getListifyPosition(), "Other record position incorrect before saving");
-        $this->assertEquals(3, $this->findStandardModel(3)->getListifyPosition(), "Other record position incorrect before saving");
-        $this->assertEquals(4, $this->findStandardModel(4)->getListifyPosition(), "Other record position incorrect before saving");
-        $this->assertEquals(5, $this->findStandardModel(5)->getListifyPosition(), "Other record position incorrect before saving");
+        $this->assertEquals(1, $this->findStandardModel(1)->getListifyPosition(), 'Other record position incorrect before saving');
+        $this->assertEquals(3, $this->findStandardModel(3)->getListifyPosition(), 'Other record position incorrect before saving');
+        $this->assertEquals(4, $this->findStandardModel(4)->getListifyPosition(), 'Other record position incorrect before saving');
+        $this->assertEquals(5, $this->findStandardModel(5)->getListifyPosition(), 'Other record position incorrect before saving');
 
         $model->save();
         $model = $this->findStandardModel(2);
 
-        $this->assertEquals(4, $model->getListifyPosition(), "Model should have new position after saving");
+        $this->assertEquals(4, $model->getListifyPosition(), 'Model should have new position after saving');
 
         // other models should be affected after saving
-        $this->assertEquals(1, $this->findStandardModel(1)->getListifyPosition(), "Other record position incorrect after saving");
-        $this->assertEquals(2, $this->findStandardModel(3)->getListifyPosition(), "Other record position incorrect after saving");
-        $this->assertEquals(3, $this->findStandardModel(4)->getListifyPosition(), "Other record position incorrect after saving");
-        $this->assertEquals(5, $this->findStandardModel(5)->getListifyPosition(), "Other record position incorrect after saving");
+        $this->assertEquals(1, $this->findStandardModel(1)->getListifyPosition(), 'Other record position incorrect after saving');
+        $this->assertEquals(2, $this->findStandardModel(3)->getListifyPosition(), 'Other record position incorrect after saving');
+        $this->assertEquals(3, $this->findStandardModel(4)->getListifyPosition(), 'Other record position incorrect after saving');
+        $this->assertEquals(5, $this->findStandardModel(5)->getListifyPosition(), 'Other record position incorrect after saving');
     }
-    
+
     /**
      * @test
      */
@@ -273,27 +276,27 @@ class StandardListifyTest extends TestCase
 
         $persistedModel = $this->findStandardModel(4);
 
-        $this->assertEquals(2, $model->getListifyPosition(), "Model does not have new position in memory");
-        $this->assertEquals(4, $persistedModel->getListifyPosition(), "Model should have old position in database");
+        $this->assertEquals(2, $model->getListifyPosition(), 'Model does not have new position in memory');
+        $this->assertEquals(4, $persistedModel->getListifyPosition(), 'Model should have old position in database');
 
         unset($persistedModel);
 
         // other models should not be affected before saving
-        $this->assertEquals(1, $this->findStandardModel(1)->getListifyPosition(), "Other record position incorrect before saving");
-        $this->assertEquals(2, $this->findStandardModel(2)->getListifyPosition(), "Other record position incorrect before saving");
-        $this->assertEquals(3, $this->findStandardModel(3)->getListifyPosition(), "Other record position incorrect before saving");
-        $this->assertEquals(5, $this->findStandardModel(5)->getListifyPosition(), "Other record position incorrect before saving");
+        $this->assertEquals(1, $this->findStandardModel(1)->getListifyPosition(), 'Other record position incorrect before saving');
+        $this->assertEquals(2, $this->findStandardModel(2)->getListifyPosition(), 'Other record position incorrect before saving');
+        $this->assertEquals(3, $this->findStandardModel(3)->getListifyPosition(), 'Other record position incorrect before saving');
+        $this->assertEquals(5, $this->findStandardModel(5)->getListifyPosition(), 'Other record position incorrect before saving');
 
         $model->save();
         $model = $this->findStandardModel(4);
 
-        $this->assertEquals(2, $model->getListifyPosition(), "Model should have new position after saving");
+        $this->assertEquals(2, $model->getListifyPosition(), 'Model should have new position after saving');
 
         // other models should be affected after saving
-        $this->assertEquals(1, $this->findStandardModel(1)->getListifyPosition(), "Other record position incorrect after saving");
-        $this->assertEquals(3, $this->findStandardModel(2)->getListifyPosition(), "Other record position incorrect after saving");
-        $this->assertEquals(4, $this->findStandardModel(3)->getListifyPosition(), "Other record position incorrect after saving");
-        $this->assertEquals(5, $this->findStandardModel(5)->getListifyPosition(), "Other record position incorrect after saving");
+        $this->assertEquals(1, $this->findStandardModel(1)->getListifyPosition(), 'Other record position incorrect after saving');
+        $this->assertEquals(3, $this->findStandardModel(2)->getListifyPosition(), 'Other record position incorrect after saving');
+        $this->assertEquals(4, $this->findStandardModel(3)->getListifyPosition(), 'Other record position incorrect after saving');
+        $this->assertEquals(5, $this->findStandardModel(5)->getListifyPosition(), 'Other record position incorrect after saving');
     }
 
 
@@ -303,14 +306,14 @@ class StandardListifyTest extends TestCase
      */
     function it_reports_whether_a_record_is_in_the_list()
     {
-        $this->assertTrue($this->findStandardModel(1)->isInList(), "Record in list should report as such");
-        $this->assertFalse($this->findStandardModel(1)->isNotInList(), "Record in list should not report the reverse");
+        $this->assertTrue($this->findStandardModel(1)->isInList(), 'Record in list should report as such');
+        $this->assertFalse($this->findStandardModel(1)->isNotInList(), 'Record in list should not report the reverse');
 
         $model = $this->findStandardModel(1);
         $model->removeFromList();
 
-        $this->assertFalse($this->findStandardModel(1)->isInList(), "Record not in list should report as such");
-        $this->assertTrue($this->findStandardModel(1)->isNotInList(), "Record not in list should not report the reverse");
+        $this->assertFalse($this->findStandardModel(1)->isInList(), 'Record not in list should report as such');
+        $this->assertTrue($this->findStandardModel(1)->isNotInList(), 'Record not in list should not report the reverse');
     }
 
     /**
@@ -319,15 +322,15 @@ class StandardListifyTest extends TestCase
      */
     function it_reports_whether_a_record_is_first_in_the_list()
     {
-        $this->assertTrue($this->findStandardModel(1)->isFirst(), "First record should report as such");
-        $this->assertFalse($this->findStandardModel(3)->isFirst(), "Middle record should not report as first");
+        $this->assertTrue($this->findStandardModel(1)->isFirst(), 'First record should report as such');
+        $this->assertFalse($this->findStandardModel(3)->isFirst(), 'Middle record should not report as first');
 
         $model = $this->findStandardModel(1);
 
         $model->removeFromList();
         $model = $this->findStandardModel(1);
 
-        $this->assertFalse($model->isFirst(), "Record not in list should not report as first");
+        $this->assertFalse($model->isFirst(), 'Record not in list should not report as first');
     }
 
     /**
@@ -336,15 +339,15 @@ class StandardListifyTest extends TestCase
      */
     function it_reports_whether_a_record_is_last_in_the_list()
     {
-        $this->assertTrue($this->findStandardModel(5)->isLast(), "Last record should report as such");
-        $this->assertFalse($this->findStandardModel(3)->isLast(), "Middle record should not report as last");
+        $this->assertTrue($this->findStandardModel(5)->isLast(), 'Last record should report as such');
+        $this->assertFalse($this->findStandardModel(3)->isLast(), 'Middle record should not report as last');
 
         $model = $this->findStandardModel(5);
 
         $model->removeFromList();
         $model = $this->findStandardModel(5);
 
-        $this->assertFalse($model->isLast(), "Record not in list should not report as last");
+        $this->assertFalse($model->isLast(), 'Record not in list should not report as last');
     }
 
     /**
@@ -377,7 +380,7 @@ class StandardListifyTest extends TestCase
     //      Setup and Helper methods
     // ------------------------------------------------------------------------------
 
-    protected function seedDatabase()
+    protected function seedDatabase(): void
     {
         for ($x = 0; $x < 5; $x++) {
 
@@ -396,9 +399,7 @@ class StandardListifyTest extends TestCase
      */
     protected function makeNewStandardModel(array $data = [])
     {
-        $model = new TestModel($data);
-
-        return $model;
+        return new TestModel($data);
     }
 
     /**
@@ -407,7 +408,7 @@ class StandardListifyTest extends TestCase
      * @param array $data
      * @return TestModel
      */
-    protected function createNewStandardModel(array $data = [])
+    protected function createNewStandardModel(array $data = []): TestModel
     {
         $model = $this->makeNewStandardModel($data);
 
@@ -416,11 +417,7 @@ class StandardListifyTest extends TestCase
         return $model;
     }
 
-    /**
-     * @param int $id
-     * @return TestModel
-     */
-    protected function findStandardModel($id)
+    protected function findStandardModel(int $id): TestModel
     {
         return TestModel::find($id);
     }
