@@ -872,7 +872,7 @@ trait Listify
         $ignoreIdCondition = '1 = 1';
 
         if ($ignoreId) {
-            $ignoreIdCondition = $this->getPrimaryKey() . ' != ' . $ignoreId;
+            $ignoreIdCondition = $this->wrapIdentifiersForRawCondition($this->getPrimaryKey()) . ' != ' . $ignoreId;
         }
 
         if ($positionBefore < $positionAfter) {
@@ -1094,6 +1094,19 @@ trait Listify
     protected function getPrimaryKey(): string
     {
         return $this->getConnection()->getTablePrefix() . $this->getQualifiedKeyName();
+    }
+
+    protected function wrapIdentifiersForRawCondition(string $condition): string
+    {
+        return implode(
+            '.',
+            array_map(
+                function (string $part) {
+                    return "`$part`";
+                },
+                explode('.', $condition)
+            )
+        );
     }
 
     /**
