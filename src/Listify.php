@@ -869,11 +869,10 @@ trait Listify
             return;
         }
 
-        $ignoreIdCondition = '1 = 1';
-
-        if ($ignoreId) {
-            $ignoreIdCondition = $this->wrapIdentifiersForRawCondition($this->getPrimaryKey()) . ' != ' . $ignoreId;
-        }
+        $ignoreConditionCallable = function ($query) use ($ignoreId) {
+            /** @var Builder $query */
+            return $query->where($this->getPrimaryKey(), '!=', $ignoreId);
+        };
 
         if ($positionBefore < $positionAfter) {
             // increment the in-between positions
@@ -881,7 +880,7 @@ trait Listify
             $this->listifyScopedQuery()
                 ->where($this->positionColumn(), '>', $positionBefore)
                 ->where($this->positionColumn(), '<=', $positionAfter)
-                ->whereRaw($ignoreIdCondition)
+                ->when($ignoreId, $ignoreConditionCallable)
                 ->decrement($this->positionColumn());
 
         } else {
@@ -890,7 +889,7 @@ trait Listify
             $this->listifyScopedQuery()
                 ->where($this->positionColumn(), '>=', $positionAfter)
                 ->where($this->positionColumn(), '<', $positionBefore)
-                ->whereRaw($ignoreIdCondition)
+                ->when($ignoreId, $ignoreConditionCallable)
                 ->increment($this->positionColumn());
         }
     }
@@ -1094,19 +1093,6 @@ trait Listify
     protected function getPrimaryKey(): string
     {
         return $this->getConnection()->getTablePrefix() . $this->getQualifiedKeyName();
-    }
-
-    protected function wrapIdentifiersForRawCondition(string $condition): string
-    {
-        return implode(
-            '.',
-            array_map(
-                function (string $part) {
-                    return "`$part`";
-                },
-                explode('.', $condition)
-            )
-        );
     }
 
     /**
