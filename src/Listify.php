@@ -66,6 +66,8 @@ trait Listify
 
     public static function bootListify(): void
     {
+        $desiredPositionOnCreate = null;
+
         static::deleting(function (Model $model) {
             /** @var Listify $model */
             $model->setListifyPosition(Arr::get($model->getOriginal(), $model->positionColumn()));
@@ -86,9 +88,19 @@ trait Listify
             $model->updateListifyPositions();
         });
 
-        static::creating(function (Model $model) {
+        static::creating(function (Model $model) use (&$desiredPositionOnCreate) {
             /** @var Listify $model */
+            $desiredPositionOnCreate = $model->getListifyPosition();
+            $model->setListifyPosition(null);
+
             $model->performConfiguredAddMethod($model);
+        });
+
+        static::created(function (Model $model) use (&$desiredPositionOnCreate) {
+            /** @var Listify $model */
+            if ($desiredPositionOnCreate) {
+                $model->insertAt($desiredPositionOnCreate);
+            }
         });
     }
 
