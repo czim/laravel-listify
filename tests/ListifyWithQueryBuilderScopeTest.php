@@ -5,7 +5,7 @@ use Czim\Listify\Test\Helpers\TestModel;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
-class ListifyWithQueryBuilderScopeTest extends StandardListifyTest
+class ListifyWithQueryBuilderScopeTest extends AbstractListifyIntegrationTest
 {
 
     protected $regexpScopePart = '[\'"]?name[\'"]? like [\'"]?%model%[\'"]?';

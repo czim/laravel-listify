@@ -7,7 +7,7 @@ namespace Czim\Listify\Test;
 use Czim\Listify\Test\Helpers\TestModel;
 use Czim\Listify\Test\Helpers\TestRelatedModel;
 
-class ListifyWithBelongsToScopeTest extends StandardListifyTest
+class ListifyWithBelongsToScopeTest extends AbstractListifyIntegrationTest
 {
 
     protected $regexpScopePart = '`test_related_model_id` = [\'"]?3[\'"]?';

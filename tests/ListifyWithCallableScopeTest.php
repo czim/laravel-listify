@@ -6,7 +6,7 @@ namespace Czim\Listify\Test;
 
 use Czim\Listify\Test\Helpers\TestModel;
 
-class ListifyWithCallableScopeTest extends StandardListifyTest
+class ListifyWithCallableScopeTest extends AbstractListifyIntegrationTest
 {
 
     protected $regexpScopePart = '`scope` = [\'"]?2[\'"]?';

@@ -4,7 +4,7 @@ namespace Czim\Listify\Test;
 use Czim\Listify\Test\Helpers\TestModel;
 use Czim\Listify\Test\Helpers\TestModelWithGlobalScope;
 
-class ListifyWithGlobalScopeTest extends StandardListifyTest
+class ListifyWithGlobalScopeTest extends AbstractListifyIntegrationTest
 {
 
     protected function seedDatabase(): void
